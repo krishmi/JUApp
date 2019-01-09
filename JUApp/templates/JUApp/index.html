@@ -1,0 +1,21 @@
+<!DOCTYPE >
+<html>
+	<head>
+		<title>JUApp</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+	</head>
+	<body background="book.jpeg">
+		<h1>JUApp</h1>
+		<form name='info_form' action='.'>
+			{% csrf_token %}
+			<select name ='dept' id="dept">
+				<option>Construction</option>	
+				<option>Information Technology</option>	
+				<option>Instrumentation</option>	
+				<option>Power</option>	
+				<option>Printing</option>	
+			</select>
+		</form>
+	</body>
+</html>
