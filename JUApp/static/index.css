@@ -22,3 +22,14 @@ body
 	color: white;
 	font-size: 20px;
 }
+#box
+{
+	display: inline-block;
+	height:150;
+	width:150;
+}
+#subjects
+{
+	height:400;
+	width: 1000;
+}

@@ -1,18 +1,47 @@
 <!DOCTYPE >
-<html>
+<html lang="en">
 	<head>
 		<title>JUApp</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'JUApp/index.css' %}">
+		<script type="text/javascript">
+			function load() {
+				var str=location.href;
+				i=str.lastIndexOf('/',str.length-2);
+				if(i!=-1)
+				{
+					str=str.substr(0,i+1);
+					str=str+document.getElementById('dept').value+'/';
+				}
+				location.href=str;
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
 	</head>
-	<body background="{% static 'JUApp/books.png'%}">
-		<img id='logo' src="{% static 'JUApp/154704146534195543.gif' %}"/>
-		<select name ='dept' id="dept">
-			<option>Construction</option>	
-			<option>Information Technology</option>	
-			<option>Instrumentation</option>	
-			<option>Power</option>	
-			<option>Printing</option>	
-		</select>
+	<body background="{% static 'books.png'%}">
+		<div class="container-fluid">
+			<img id='logo' src="{% static '154704146534195543.gif' %}"/>
+			<select name ='dept' id="dept" onchange="load()">
+				<option value="Construction">Construction</option>	
+				<option value="Information Technology">Information Technology</option>	
+				<option value="Instrumentation">Instrumentation</option>	
+				<option value="Power">Power</option>	
+				<option value="Printing">Printing</option>	
+			</select>
+			<div id='subjects'>
+				{% if flag %}
+					{% for sub in s1 %}
+						<div id='box'>
+							{{sub.name}}
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
 	</body>
 </html>
