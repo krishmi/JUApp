@@ -1,13 +1,49 @@
+.no-padding ,.no-padding>[class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+body
+{
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 #logo {
   display: block;
   margin-top:20;
   margin-left: auto;
   margin-right: auto;
 }
-body
+.box
 {
-	background-repeat: no-repeat;
-	background-size: cover;
+	color: white;
+	margin-top: 10px;
+	width: 50%;
+	overflow:hidden;
+	white-space: nowrap;
+	height: 140px;
+}
+.innerBox
+{
+	overflow: hidden;
+}
+.subject
+{
+	margin:0,5;
+	display: inline-block;
+	width:100px;
+	height: 50px;
+    white-space: normal;
+    vertical-align: middle;
+    background-color: rgba(255,255,255,.2);
+}
+.overlay
+{
+	background-color: rgba(255,255,255,.2);
+}
+a,a:hover
+{
+	color: white;
+	text-decoration: none;
 }
 #dept
 {
@@ -18,18 +54,13 @@ body
 	height: 30px;
 	width:300px;
 	border-radius: 10px;
-	background-color: #8c8c8c;
+	background-color: #808080;
 	color: white;
 	font-size: 20px;
 }
-#box
+button
 {
-	display: inline-block;
-	height:150;
-	width:150;
-}
-#subjects
-{
-	height:400;
-	width: 1000;
+	height:50;
+	width: 50;
+	border:none;
 }
