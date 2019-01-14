@@ -12,21 +12,16 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$("#left").click(function()
+				$(".left").click(function()
 				{
-				var pos=$('.innerBox').scrollLeft();
-				if(pos>0)
-				{
+					var pos=$('.innerBox').scrollLeft();
 					$('.innerBox').scrollLeft(Math.max(0,pos-100));
-				}
 				});
-				$("#right").click(function()
+				$(".right").click(function()
 				{
-				var pos=$('.innerBox').scrollLeft();
-				if(pos<$('.innerBox').width())
-				{
+					var pos=$('.innerBox').scrollLeft();
 					$('.innerBox').scrollLeft(Math.min($('.innerBox').width(),pos+100));
-				}
+			
 				});
 			});
 			
@@ -53,7 +48,7 @@
 	</head>
 	<body background="{% static 'books.png'%}">
 	<div class="container-fluid">
-			<img id='logo' src="{% static '154704146534195543.gif' %}"/>
+			<img id='logo' src="{% static 'logo.gif' %}"/>
 			<select name ='dept' id="dept" onchange="load()">
 				<option value="Construction">Construction</option>	
 				<option value="Information Technology">Information Technology</option>	
@@ -63,19 +58,142 @@
 			</select>
 			{% if flag %}
 				<div class="bg-secondary container box rounded">
+				<div class="outerbox">
 					<h5>First Semester</h5>
 					<br/>
 					<div class="row no-padding no-gutters">
-						<button id="left" class="bg-secondary"><i class='fas fa-angle-left' style='font-size:48px;color:white'></i></button>
-						<div class="container innerBox col-8">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
 							{% for sub in s1 %}
-								<div class=" subject text-center small rounded" onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
-									<a  href="">{{sub.name}}</a>
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
 								</div>
+							</a>
 							{% endfor %}
 						</div>
-						<button id="right" class="bg-secondary"><i class='fas fa-angle-right' style='font-size:48px;color:white'></i></button>
+						<div class="innerBox col-1"></div>
 					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Second Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s2 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Third Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s3 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Fourth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s4 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Fifth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s5 %}
+							<a  href="{{sub.name}}"{{sub.name}}>
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Sixth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s6 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Seventh Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s7 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							{% endfor %}
+							</a>
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Eighth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class="innerBox col-1"></div>
+						<div class="innerBox col-10 ">
+							{% for sub in s8 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="innerBox col-1"></div>
+					</div>
+				</div>
 				</div>
 			{% endif %}
 		</div>

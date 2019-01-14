@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% load static %}
+		<title>File Upload</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			body
+			{
+				padding:3%;
+				background-color: lightblue;
+			}
+			h1
+			{
+				color: white;
+			}
+			h3
+			{
+				color: blue;
+				margin-left: 5%;
+			}
+			input
+			{
+				height: 40px;
+				border-radius: 5px;
+			}
+			#signIn
+			{
+				background-color: blue;
+			}
+			#signUp
+			{
+				background-color: red;
+			}
+			#login
+			{
+				margin-left: 27%;
+				margin-top: 5%;
+				border-radius: 10px;
+				height: 70%;
+				width:35%;
+				border:1px solid blue;
+				box-shadow: 0px 8px 16px 0px lightblue inset;
+				position: absolute;
+				background-color: white;
+				padding: 5%;
+				z-index: 1;
+			}
+			#file
+			{
+				border-style: dashed;
+				height:50%;
+				width: 60%;
+				margin-top: 10%;
+				margin-left: 20%;
+				padding-top: 13%;
+				padding-left: 15%;
+				background-image: url("{%static 'upload.png'%}");
+				background-repeat: no-repeat;
+				background-size: cover;
+				opacity: 0.5;
+			}
+			#login  input
+			{
+				width: 100%;
+				margin:2%;
+			}
+			#submit
+			{
+				margin: 2% 10%;
+			}
+		</style>
+		<script type="text/javascript">
+  (function(window) {
+    function triggerCallback(e, callback) {
+      if(!callback || typeof callback !== 'function') {
+        return;
+      }
+      var files;
+      if(e.dataTransfer) {
+        files = e.dataTransfer.files;
+      } else if(e.target) {
+        files = e.target.files;
+      }
+      callback.call(null, files);
+    }
+    function makeDroppable(ele, callback) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('multiple', true);
+      input.style.display = 'none';
+      input.addEventListener('change', function(e) {
+        triggerCallback(e, callback);
+      });
+      ele.appendChild(input);
+      
+      ele.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.add('dragover');
+      });
+
+      ele.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.remove('dragover');
+      });
+
+      ele.addEventListener('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.remove('dragover');
+        triggerCallback(e, callback);
+      });
+      
+      ele.addEventListener('click', function() {
+        input.value = null;
+        input.click();
+      });
+    }
+    window.makeDroppable = makeDroppable;
+  })(this);
+  (function(window) {
+    makeDroppable(window.document.querySelector('#file'), function(files) {
+      console.log(files);
+      for(var i=0; i<files.length; i++) {
+        if(files[i].type.indexOf('image/') === 0) {
+           URL.createObjectURL(files[i]) ;
+        }
+      }
+    });
+  })(this);
+</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div id="login">
+				<h3>JUApp</h3>
+				Username:
+				<br/>
+				<input type="text" name="uname"/>
+				<br/>
+				Password:
+				<br/>
+				<input type="password" name="passwd"/>
+				<br/>
+				<input type="submit" name="submit" id="signIn" value="Sign In">
+				<input type="submit" name="submit" id="signUp" value="Sign Up">
+			</div>
+			<h1>Upload {{res}}</h1>
+			<div id="file" class="container" >
+			<p>Drag files here or click to upload</p>
+				<form action="./uploadFile/" enctype='multipart/form-data' method='post'>
+					{% csrf_token%}
+					{{form}}
+					<br/>
+					<input type="submit" value="Upload" id='submit'/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
