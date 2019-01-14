@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Subjects
 from .forms import UploadForm
-from .models import Upload
+from .models import Upload,User
 from django.http import HttpResponse,HttpResponseRedirect
 import os
 
@@ -40,7 +40,7 @@ def pdf_response(request,subject,dept,resource,resource_name):
 
 def login(request,dept,subject,resource):
 	form=UploadForm()
-	return render(request,'login.html',{'sub':subject,'res':resource,'form':form})
+	return render(request,'login.html',{'flag':True,'sub':subject,'res':resource,'form':form})
 
 def uploading(request,subject,dept,resource):
 	inst=Upload()
@@ -53,4 +53,17 @@ def uploading(request,subject,dept,resource):
 		return HttpResponseRedirect('/JUApp/'+dept+'/'+subject+'/')
 	else:
 		return HttpResponseRedirect('/JUApp/')
-	
+
+def create(request,dept,subject,resource):
+	pass
+
+def verify(request,dept,subject,resource):
+	if request.method==POST:
+		uname=request.POST.get('uname')
+		passwd=request.POST.get('passwd')
+		user=User.objects.filter(uname=uname)
+		if passwd==user.passwd:
+			return render(request,'login.html',{'flag':False,'sub':subject,'res':resource})
+		else:
+			form=UploadForm()
+			return render(request,'login.html',{'flag':True,'sub':subject,'res':resource,'form':form})

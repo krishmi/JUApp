@@ -33,3 +33,17 @@ class Upload(models.Model):
 	subject=models.CharField(max_length=100, default='')
 	resource=models.CharField(max_length=100,default='')
 	file=models.FileField(upload_to=getPath)
+
+class User(models.Model):
+	dept_choice=(
+				('Information Technology','Information Technology'),
+				('Construction','Construction'),
+				('Power','Power'),
+				('Printing','Printing'),
+				('Instrumentation','Instrumentation'),
+				)
+	name=models.CharField(max_length=100,default='')
+	uname=models.CharField(max_length=100,default='')
+	password=models.CharField(max_length=20,default='')
+	dept=models.CharField(max_length=50,choices=dept_choice)
+	roll=models.CharField(max_length=20)

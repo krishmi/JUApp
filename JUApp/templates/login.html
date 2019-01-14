@@ -52,6 +52,7 @@
 				padding: 5%;
 				z-index: 1;
 			}
+
 			#file
 			{
 				border-style: dashed;
@@ -66,6 +67,38 @@
 				background-size: cover;
 				opacity: 0.5;
 			}
+			@media screen and (max-width: 768px)
+			{
+				#file
+			{
+				border-style: dashed;
+				height:70%;
+				width: 80%;
+				margin-top: 10%;
+				margin-left: 10%;
+				padding-top: 13%;
+				padding-left: 20%;
+				background-image: url("{%static 'upload.png'%}");
+				background-repeat: no-repeat;
+				background-size: cover;
+				opacity: 0.5;
+			}
+
+				#login
+			{
+				margin-left: 20%;
+				margin-top: 10%;
+				border-radius: 10px;
+				height: 70%;
+				width:50%;
+				border:1px solid blue;
+				box-shadow: 0px 8px 16px 0px lightblue inset;
+				position: absolute;
+				background-color: white;
+				padding: 5%;
+				z-index: 1;
+			}
+			}
 			#login  input
 			{
 				width: 100%;
@@ -77,70 +110,20 @@
 			}
 		</style>
 		<script type="text/javascript">
-  (function(window) {
-    function triggerCallback(e, callback) {
-      if(!callback || typeof callback !== 'function') {
-        return;
-      }
-      var files;
-      if(e.dataTransfer) {
-        files = e.dataTransfer.files;
-      } else if(e.target) {
-        files = e.target.files;
-      }
-      callback.call(null, files);
-    }
-    function makeDroppable(ele, callback) {
-      var input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('multiple', true);
-      input.style.display = 'none';
-      input.addEventListener('change', function(e) {
-        triggerCallback(e, callback);
-      });
-      ele.appendChild(input);
-      
-      ele.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        ele.classList.add('dragover');
-      });
-
-      ele.addEventListener('dragleave', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        ele.classList.remove('dragover');
-      });
-
-      ele.addEventListener('drop', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        ele.classList.remove('dragover');
-        triggerCallback(e, callback);
-      });
-      
-      ele.addEventListener('click', function() {
-        input.value = null;
-        input.click();
-      });
-    }
-    window.makeDroppable = makeDroppable;
-  })(this);
-  (function(window) {
-    makeDroppable(window.document.querySelector('#file'), function(files) {
-      console.log(files);
-      for(var i=0; i<files.length; i++) {
-        if(files[i].type.indexOf('image/') === 0) {
-           URL.createObjectURL(files[i]) ;
-        }
-      }
-    });
-  })(this);
+		function verify() {
+			location.href="./verify";
+		}
+		function create()
+		{
+			location.href="./create";
+		}
 </script>
 	</head>
 	<body>
 		<div class="container-fluid">
+		{% if flag %}
 			<div id="login">
+			<form  method="post">
 				<h3>JUApp</h3>
 				Username:
 				<br/>
@@ -150,12 +133,13 @@
 				<br/>
 				<input type="password" name="passwd"/>
 				<br/>
-				<input type="submit" name="submit" id="signIn" value="Sign In">
-				<input type="submit" name="submit" id="signUp" value="Sign Up">
+				<input type="submit" name="submit" onsubmit="verify()" id="signIn" value="Sign In">
+				<input type="submit" name="submit" onsubmit="create()" id="signUp" value="Sign Up">
+			</form>
 			</div>
+		{% endif %}
 			<h1>Upload {{res}}</h1>
 			<div id="file" class="container" >
-			<p>Drag files here or click to upload</p>
 				<form action="./uploadFile/" enctype='multipart/form-data' method='post'>
 					{% csrf_token%}
 					{{form}}

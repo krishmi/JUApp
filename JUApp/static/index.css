@@ -23,11 +23,6 @@ body
 	white-space: nowrap;
 	height: 150px;
 }
-::-webkit-scrollbar
-{
-
-	height: 0;
-}
 .innerBox
 {
 	overflow-y: hidden;
