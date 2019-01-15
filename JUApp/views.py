@@ -12,9 +12,7 @@ def index(request,dept):
 		return render(request,'index.html',{'flag':False})
 	else:
 		s1=Subjects.objects.filter(dept=dept,sem='First')
-		print(s1.count())
 		s2=Subjects.objects.filter(dept=dept,sem='Second')
-		print(s2.count())
 		s3=Subjects.objects.filter(dept=dept,sem='Third')
 		s4=Subjects.objects.filter(dept=dept,sem='Fourth')
 		s5=Subjects.objects.filter(dept=dept,sem='Fifth')
@@ -39,8 +37,7 @@ def pdf_response(request,subject,dept,resource,resource_name):
 	pdf.closed
 
 def login(request,dept,subject,resource):
-	form=UploadForm()
-	return render(request,'login.html',{'flag':True,'sub':subject,'res':resource,'form':form})
+	return render(request,'login.html',{'flag':True,'sub':subject,'res':resource})
 
 def uploading(request,subject,dept,resource):
 	inst=Upload()
@@ -52,18 +49,23 @@ def uploading(request,subject,dept,resource):
 		upload.save(commit=True)
 		return HttpResponseRedirect('/JUApp/'+dept+'/'+subject+'/')
 	else:
-		return HttpResponseRedirect('/JUApp/')
+		return HttpResponseRedirect('/JUApp/index')
 
 def create(request,dept,subject,resource):
 	pass
 
 def verify(request,dept,subject,resource):
-	if request.method==POST:
-		uname=request.POST.get('uname')
-		passwd=request.POST.get('passwd')
-		user=User.objects.filter(uname=uname)
-		if passwd==user.passwd:
-			return render(request,'login.html',{'flag':False,'sub':subject,'res':resource})
-		else:
-			form=UploadForm()
-			return render(request,'login.html',{'flag':True,'sub':subject,'res':resource,'form':form})
+	if request.method=="POST":
+		try:
+			uname=request.POST.get('uname')
+			passwd=request.POST.get('passwd')
+			user=User.objects.get(uname=uname)
+			if passwd==user.password:
+				form=UploadForm()
+				return render(request,'login.html',{'flag':False,'sub':subject,'res':resource,'form':form})
+			else:
+				return HttpResponseRedirect('/JUApp/'+dept+'/'+subject+'/'+resource+'/login/')
+		except User.DoesNotExist :
+			return HttpResponseRedirect('/JUApp/'+dept+'/'+subject+'/'+resource+'/login/')
+	else:
+		return HttpResponse('Not post method')
