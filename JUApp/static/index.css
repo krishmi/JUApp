@@ -27,7 +27,14 @@ body
 
 .innerBox
 {
+	position: absolute;
+	left: 0;
+}
+.hiding
+{
 	overflow: hidden;
+	padding: 0;
+	margin: 0;
 }
 .outerBox
 {

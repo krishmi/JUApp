@@ -11,19 +11,38 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$(".left").click(function()
+			var val=0;
+			var move=50;
+			var flag=false;
+			var boxLength=[0,0,0,0,0,0,0,0];
+			var hideLength=[0,0,0,0,0,0,0,0];
+			function callback(argument) {
+				flag=false;
+			}
+			function left()
+			{
+				if(flag)
+					return ;
+				var currentPosition = parseInt($('.innerBox').css("left"));
+				var len=$('body>div>div>div>div>div>div').parent().width();
+			//	alert(len+' '+val+' '+currentPosition);
+				if(val-len+currentPosition>0)
 				{
-					var pos=$('.innerBox').scrollLeft();
-					$('.innerBox').scrollLeft(Math.max(0,pos-100));
-				});
-				$(".right").click(function()
-				{
-					var pos=$('.innerBox').scrollLeft();
-					$('.innerBox').scrollLeft(Math.min($('.innerBox').width(),pos+100));
-			
-				});
-			});
+					flag=true;	
+					$('.innerBox').animate({left:"-="+Math.min(val-len+currentPosition,move)},200,callback);
+				}	
+			}
+			function right()
+			{
+				if(flag)
+					return ;
+				var currentPosition = parseInt($('.innerBox').css("left"));
+    			if (currentPosition <0) 
+    			{
+    				flag=true;
+					$('.innerBox').animate({left:"+="+move}, 200,callback);
+				}
+			}
 			
 			function enlarge(obj) {
 				scale=1.1;
@@ -43,10 +62,16 @@
 				}
 				location.href=str;
 			}
+			function calculate()
+			{
+				var containers=$('body>div>div>div>div>div>div');
+				for(var i=0;i<containers.children().length;++i)
+				val+=$(containers.children()[i].children[0])[0].offsetWidth+15;
+			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
 	</head>
-	<body background="{% static 'books.png'%}">
+	<body background="{% static 'books.png'%}" onload="calculate()">
 	<div class="container-fluid">
 			<img id='logo' src="{% static 'logo.gif' %}" class="img-responsive" />
 			<select name ='dept' id="dept" onchange="load()">
@@ -62,10 +87,11 @@
 					<h5>First Semester</h5>
 					<br/>
 					<div class="row no-padding no-gutters">
-						<div class="innerBox col-1">
-							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 50%'></i>
+						<div class=" col-1" onclick="left()">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
 						</div>
-						<div class="innerBox col-10 ">
+						<div class="hiding col-10" id="l1" >
+						<div class="innerBox " id="l2">
 							{% for sub in s1 %}
 							<a  href="{{sub.name}}">
 								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
@@ -74,12 +100,13 @@
 							</a>
 							{% endfor %}
 						</div>
-						<div class="innerBox col-1">
-							<i class='fas fa-angle-right' style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+						<div class=" col-1 " onclick="right()">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
 						</div>
 					</div>
 				</div>
-				<div class="outerbox">
+		<!--		<div class="outerbox">
 					<h5>Second Semester</h5>
 					<br/>
 					<div class="row no-padding no-gutters">
@@ -198,7 +225,7 @@
 						<div class="innerBox col-1"></div>
 					</div>
 				</div>
-				</div>
+				</div>-->
 			{% endif %}
 		</div>
 	</body>
