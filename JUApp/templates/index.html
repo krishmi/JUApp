@@ -2,24 +2,21 @@
 <html lang="en">
 {% load static %}
 <head>
-	<title>test</title>
+	<title>JUApp</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-  	<style type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
   		*
   		{
   			padding: 0;
   			margin: 0;
   		}
-  		html
-  		{
-  			height: 100%;
-  		}
-  		div
+  		html,div
   		{
   			height: 100%;
   		}
@@ -39,6 +36,7 @@
       .container-fluid
       {
         padding: 0;
+        margin:0;
       }
   		#login
   		{
@@ -84,12 +82,39 @@
   				width: 100%;
   			}
   		}
-  	</style>
+
+#dept
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  height: 30px;
+  width:300px;
+  border-radius: 15px;
+  margin-top: 20%;
+  font-size: 20px;
+}
+
+.overlay
+{
+  background-color: rgba(0,0,0,0.9);
+  text-align: center;
+  color: white;
+}
+
+</style>
+<script type="text/javascript">
+  function load() {
+        location.href+=document.getElementById('dept').value+'/';
+      }
+</script>
 </head>
 <body background="{% static 'accounting-achievement-aerial-1043506.jpg' %}">
+{% if flag %}
 	<div class="row container-fluid no-gutters">
 	<div id="login">
-		<h1 class="display-4">JUApp</h1>
+		<h1 class="display-3">JUApp</h1>
 		<form  method="post">
 			{% csrf_token%}
 			Username:
@@ -108,5 +133,21 @@
     Let's create the future together!
     </div>
 	</div>
+{% else %}
+<div class="container-fluid overlay">
+      <div style="height:5%;">
+      <h1 class="display-4" style="display: inline;float: left;margin-left: 2%">JUApp</h1>
+      <i class="fa fa-user-circle" style="font-size:48px;color:white;float:right;margin-top:1%;
+      margin-right:3%;"></i>
+      </div>
+      <select name ='dept' id="dept" onchange="load()">
+        <option value="select">Select subject</option>
+        <option value="Construction">Construction</option>  
+        <option value="Information Technology">Information Technology</option>  
+        <option value="Instrumentation">Instrumentation</option>  
+        <option value="Power">Power</option>  
+        <option value="Printing">Printing</option>  
+      </select>
+{% endif %}
 </body>
 </html>
