@@ -1,0 +1,320 @@
+<!DOCTYPE >
+<html lang="en">
+	<head>
+		{% load static %}
+		<title>JUApp</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			var move=50;
+			var flag=false;
+			var boxLen={};
+			$(document).ready(function(){
+				$(window).resize(function(){
+					$('.innerBox').animate({left:0},200);
+				});
+			});
+			function callback(argument) {
+				flag=false;
+			}
+			function left(arg)
+			{
+				if(flag)
+					return ;
+				var currentPosition = parseInt($('#'+arg).css("left"));
+				var len=$('#'+arg).parent().width();
+			//	alert(len+' '+boxLen[arg]+' '+currentPosition);
+				if(boxLen[arg]-len+currentPosition>0)
+				{
+					flag=true;	
+					$('#'+arg).animate({left:"-="+Math.min(boxLen[arg]-len+currentPosition,move)},200,callback);
+				}	
+			}
+			function right(arg)
+			{
+				if(flag)
+					return ;
+				var currentPosition = parseInt($('#'+arg).css("left"));
+    			if (currentPosition+move <0) 
+    			{
+    				flag=true;
+					$('#'+arg).animate({left:"+="+move}, 200,callback);
+				}
+				else
+				{
+					flag=true;
+					$('#'+arg).animate({left:0}, 200,callback);
+				}
+			}
+			
+			function enlarge(obj) {
+				scale=1.1;
+				$(obj).css('-webkit-transform','scale('+scale+')');
+			}
+			function diminish(obj) {
+				scale=1.0;
+				$(obj).css('-webkit-transform','scale('+scale+')');
+			}
+			function load() {
+				var str=location.href;
+				i=str.lastIndexOf('/',str.length-2);
+				if(i!=-1)
+				{
+					str=str.substr(0,i+1);
+					str=str+document.getElementById('dept').value+'/';
+				}
+				location.href=str;
+			}
+			function calculate()
+			{
+				var box=document.getElementById('1');
+				var val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['1']=val+100;
+				box=document.getElementById('2');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['2']=val+100;
+				box=document.getElementById('3');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['3']=val+100;
+				box=document.getElementById('4');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['4']=val+100;
+				box=document.getElementById('5');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['5']=val+100;
+				box=document.getElementById('6');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['6']=val+100;
+				box=document.getElementById('7');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['7']=val+100;
+				box=document.getElementById('8');
+				val=0;
+				for(var i=0;i<box.children.length;++i)
+					val+=box.children[i].children[0].offsetWidth;
+				boxLen['8']=val+100;
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+	</head>
+	<body background="{% static 'books.jpg'%}" onload="calculate()">
+	<div class="container-fluid">
+     
+			<img id='logo' src="{% static 'logo.gif' %}" class="img-responsive" />
+			<select name ='dept' id="dept" onchange="load()">
+				<option value="Construction">Construction</option>	
+				<option value="Information Technology">Information Technology</option>	
+				<option value="Instrumentation">Instrumentation</option>	
+				<option value="Power">Power</option>	
+				<option value="Printing">Printing</option>	
+			</select>
+			{% if flag %}
+				<div class="bg-primary container box rounded">
+				<div class="outerbox">
+					<h5>First Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('1')" >
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="1">
+							{% for sub in s1 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('1')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Second Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('2')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="2">
+							{% for sub in s2 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('2')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Third Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('3')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="3">
+							{% for sub in s3 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('3')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Fourth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('4')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="4">
+							{% for sub in s4 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('4')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Fifth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('5')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="5">
+							{% for sub in s5 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('5')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Sixth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('6')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="6">
+							{% for sub in s6 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('6')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Seventh Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('7')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="7">
+							{% for sub in s7 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('7')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				<div class="outerbox">
+					<h5>Eighth Semester</h5>
+					<br/>
+					<div class="row no-padding no-gutters">
+						<div class=" col-1" onclick="left('8')">
+							<i class='fas fa-angle-left' style='font-size:40px;color:white;margin-left: 40%'></i>
+						</div>
+						<div class="hiding col-10">
+						<div class="innerBox " id="8">
+							{% for sub in s8 %}
+							<a  href="{{sub.name}}">
+								<div class="subject text-center small rounded " onmouseenter="enlarge(this)" onmouseleave="diminish(this)">
+									{{sub.name}}
+								</div>
+							</a>
+							{% endfor %}
+						</div>
+						</div>
+						<div class=" col-1 " onclick="right('8')">
+							<i class='fas fa-angle-right'  style='font-size:40px;color:white;margin-left: 25%'></i>
+						</div>
+					</div>
+				</div>
+				</div>
+			{% endif %}
+		</div>
+	</body>
+</html>

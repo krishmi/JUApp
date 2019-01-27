@@ -6,10 +6,11 @@ from django.http import HttpResponse,HttpResponseRedirect
 import os
 
 # Create your views here.
-
+def test(request):
+	return render(request,'test.html')
 def index(request,dept):
 	if dept=='index':
-		return render(request,'index.html',{'flag':False})
+		return render(request,'index.html',{'flag':True})
 	else:
 		s1=Subjects.objects.filter(dept=dept,sem='First')
 		s2=Subjects.objects.filter(dept=dept,sem='Second')
@@ -52,7 +53,7 @@ def uploading(request,subject,dept,resource):
 		return HttpResponseRedirect('/JUApp/index')
 
 def create(request,dept,subject,resource):
-	pass
+	return render(request,'signup.html')
 
 def verify(request,dept,subject,resource):
 	if request.method=="POST":
@@ -69,3 +70,14 @@ def verify(request,dept,subject,resource):
 			return HttpResponseRedirect('/JUApp/'+dept+'/'+subject+'/'+resource+'/login/')
 	else:
 		return HttpResponse('Not post method')
+
+def add(request,dept,subject,resource):
+	if request.method=="POST":
+
+		user=User(name=request.POST.get('name'),uname=request.POST.get('uname'),roll=request.POST.get('roll'),dept=request.POST.get('dept'),password=request.POST.get('psw'))
+		user.save()
+		form=UploadForm()
+		return render(request,'login.html',{'flag':False,'sub':subject,'res':resource,'form':form})
+	else:
+		return HttpResponse('Not post method')
+

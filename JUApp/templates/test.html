@@ -2,7 +2,7 @@
 <html lang="en">
 {% load static %}
 <head>
-	<title>test</title>
+	<title>JUApp</title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -34,12 +34,7 @@
   			width: 80%;
   			height: 40px;
   			border-radius: 10px;
-        padding-left: 10px;
   		}
-      .container-fluid
-      {
-        padding: 0;
-      }
   		#login
   		{
   			width:50%;
@@ -64,21 +59,8 @@
   			background-color: black;
   			color: white;
   		}
-      #tagline
-      {
-          
-          padding-top: 16%;
-          font-style: italic;
-          font-size: 3.5vw;
-          text-align: justify-all;
-          text-justify:inter-word;
-      }
   		@media screen and (max-width: 600px)
   		{
-        #tagline
-        {
-          display: none;
-        }
   			#login
   			{
   				width: 100%;
@@ -87,9 +69,9 @@
   	</style>
 </head>
 <body background="{% static 'accounting-achievement-aerial-1043506.jpg' %}">
-	<div class="row container-fluid no-gutters">
+	<div class="row">
 	<div id="login">
-		<h1 class="display-4">JUApp</h1>
+		<h1>JUApp</h1>
 		<form  method="post">
 			{% csrf_token%}
 			Username:
@@ -104,9 +86,6 @@
 			<input type="submit" name="submit" formaction="create/" id="signUp" value="Sign Up">
 		</form>
 	</div>
-  <div id="tagline">
-    Let's create the future together!
-    </div>
 	</div>
 </body>
 </html>

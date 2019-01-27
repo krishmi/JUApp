@@ -2,6 +2,7 @@
     padding-left: 0 ;
     padding-right: 0;
 }
+
 body
 {
 	background-repeat: no-repeat;
@@ -41,6 +42,11 @@ body
 .outerBox
 {
 	margin:10;
+	text-align: center;
+}
+.row
+{
+	height: 30%;
 }
 .subject:hover
 {
@@ -75,7 +81,7 @@ a,a:hover
 	height: 30px;
 	width:300px;
 	border-radius: 10px;
-	background-color: #808080;
+	background-color: blue;
 	color: white;
 	font-size: 20px;
 }
