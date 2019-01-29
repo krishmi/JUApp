@@ -1,24 +1,60 @@
+*
+		{
+			margin:0;
+			padding:0;
+		}
+		html,body,div
+		{
+			height: 100%;
+			
+		}
+		.container-fluid,.row,.container
+		{
+			padding: 0;
+			margin:0;
+		}
+		body
+		{
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+			position: relative;
+		}
+		h5
+		{
+			color: red;
+		}
+		.overlay
+		{
+		  background-color: rgba(0,0,0,0.9);
+		  color: white;
+		  padding-top: 10%;
+		  padding-left: 10%;
+		  height: 92%;
+		}
+		a:hover,a:active
+		{
+			text-decoration: none;
+			color: black;
+		}
+
 .no-padding ,.no-padding>[class*="col-"] {
     padding-left: 0 ;
     padding-right: 0;
 }
 
-#logo {
-  display: block;
-  margin-top:2%;
-  height: 30%;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 .box
 {
-	color: white;
+	background-color: white;
+	color: black;
 	margin-top: 10px;
 	width: 80%;
 	overflow-x:hidden;
 	overflow-y: auto;
 	white-space: nowrap;
 	height: 45%;
+	padding: 10px;
 }
 
 .innerBox
@@ -34,18 +70,13 @@
 	padding: 0;
 	margin: 0;
 }
-.outerBox
-{
-	margin:10;
-	text-align: center;
-}
 .row
 {
 	height: 30%;
 }
 .subject:hover
 {
-	background-color: rgba(255,255,255,0.8)
+	background-color: green;
 }
 .subject
 {
@@ -56,32 +87,9 @@
 	padding-right: 10;
 	overflow-wrap: break-word;
 	display: inline-block;
-	height: 50px;
+	height: 90%;
+	min-width: 150px;
     white-space: normal;
-    vertical-align: middle;
-    background-color: rgba(255,255,255,0.5);
-    color: black;
-}
-a,a:hover
-{
-	color: white;
-	text-decoration: none;
-}
-#dept
-{
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	height: 30px;
-	width:300px;
-	border-radius: 10px;
-	background-color: blue;
-	color: white;
-	font-size: 20px;
-}
-button
-{
-	height:50;
-	width: 50;
-	border:none;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
 }

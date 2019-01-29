@@ -26,7 +26,7 @@
   			background-repeat: no-repeat;
   			background-size: cover;
   		}
-  		input
+  		input,button,select
   		{
   			width: 80%;
   			height: 40px;
@@ -38,7 +38,7 @@
         padding: 0;
         margin:0;
       }
-  		#login
+  		#login,#signDiv
   		{
   			width:50%;
   			background-color: rgba(0,0,0,0.9);
@@ -48,11 +48,15 @@
   			text-align: center;
   			padding: 5%;
   		}
-  		#login *
+      #signDiv
+      {
+        display: none;
+      }
+  		#login *,#signDiv *
   		{
   			margin: 10px;
   		}
-  		#signIn
+  		.signIn
   		{
   			background-color: red;
   			border-color: red;
@@ -62,6 +66,11 @@
   			background-color: black;
   			color: white;
   		}
+      #signUp:hover
+      {
+        background-color: green;
+        color: black;
+      }
       #tagline
       {
           
@@ -108,6 +117,11 @@
   function load() {
         location.href+=document.getElementById('dept').value+'/';
       }
+    function sign()
+    {
+        $('#login').toggle('slow');
+        $('#signDiv').toggle('slow');
+    }
 </script>
 </head>
 <body background="{% static 'accounting-achievement-aerial-1043506.jpg' %}">
@@ -117,18 +131,50 @@
 		<h1 class="display-3">JUApp</h1>
 		<form  method="post">
 			{% csrf_token%}
-			Username:
+			Username
 			<br/>
 			<input type="text" name="uname"/>
 			<br/>
-			Password:
+			Password
 			<br/>
 			<input type="password" name="passwd"/>
 			<br/>
-			<input type="submit" name="submit" formaction="verify/" id="signIn" value="Sign In">
-			<input type="submit" name="submit" formaction="create/" id="signUp" value="Sign Up">
+			<input type="submit" name="submit" formaction="verify/" class ="signIn" value="Sign In"/>
+			<input type="button"  id="signUp" value="Sign Up" onclick="sign()" />
 		</form>
 	</div>
+  <div id="signDiv">
+  <form method="post">
+  {% csrf_token%}
+      Name*
+      <br/>
+      <input type="text" name="name" required />
+      <br/>
+      Department*
+      <br/>
+      <select name="dept">
+        <option value="Construction">Construction</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Instrumentation">Instrumentation</option>
+        <option value="Power">Power</option>
+        <option value="Printing">Printing</option>
+      </select>
+      <br/>
+      Roll No*
+      <br/>
+      <input type="text" name="roll" required/>
+      <br/>
+      Username*
+      <br/>
+      <input type="text" name="uname" required/>
+      <br/>
+      Password*
+      <br/>
+      <input type="password" name="passwd" required/>
+      <br/>
+      <input type="submit" name="submit" formaction="create/" class="signIn" value="Sign Up"/>
+      </form>
+  </div>
   <div id="tagline">
     Let's create the future together!
     </div>
