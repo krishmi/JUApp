@@ -83,6 +83,10 @@
 			{
 				margin: 5px;
 			}
+			.list-group-item:hover
+			{
+				background-color: blue;
+			}
 			.overlay
 			{
 				background-color: rgba(0,0,0,0.9);
@@ -121,6 +125,16 @@
 			}
 	</style>
 	<script type="text/javascript">
+	function logout()
+		{
+			var str=location.href;
+			i=str.indexOf('JUApp');
+			if(i!=-1)
+			{
+				str=str.substr(0,i);
+			}
+			location.href=str+'JUApp/logout/';
+		}
 	var res;
 		function uploadForm(resource){
 			res=resource+"/";
@@ -136,7 +150,7 @@
 	<div style="height:60px;background-color: white;" class="container-fluid">
       <h1 style="display: inline;float: left;margin-left: 2%">JUApp</h1>
       <i class="fa fa-user-circle" style="font-size:36px;color:black;float:right;margin-top:1%;
-      margin-right:3%;"></i>
+      margin-right:3%;" onclick="logout()" title="Logout"></i>
       </div>
 	<div class="container-fluid overlay " role="tablist" style="text-align: center;">
 	  	<ul class="nav nav-tabs nav-justified ">

@@ -122,6 +122,21 @@
         $('#login').toggle('slow');
         $('#signDiv').toggle('slow');
     }
+    function logout()
+    {
+      var str=location.href;
+      i=str.indexOf('JUApp');
+      if(i!=-1)
+      {
+        str=str.substr(0,i);
+      }
+      location.href=str+'JUApp/logout/';
+    }
+    function check()
+    {
+        alert(userList);
+        return false;
+    }
 </script>
 </head>
 <body background="{% static 'accounting-achievement-aerial-1043506.jpg' %}">
@@ -131,13 +146,17 @@
 		<h1 class="display-3">JUApp</h1>
 		<form  method="post">
 			{% csrf_token%}
-			Username
+			Username*
 			<br/>
-			<input type="text" name="uname"/>
+			<input type="text" name="uname" required/>
 			<br/>
-			Password
+      Roll No*
+      <br/>
+      <input type="text" name="roll" required/>
+      <br/>
+			Password*
 			<br/>
-			<input type="password" name="passwd"/>
+			<input type="password" name="passwd" required/>
 			<br/>
 			<input type="submit" name="submit" formaction="verify/" class ="signIn" value="Sign In"/>
 			<input type="button"  id="signUp" value="Sign Up" onclick="sign()" />
@@ -166,13 +185,13 @@
       <br/>
       Username*
       <br/>
-      <input type="text" name="uname" required/>
+      <input type="text" name="uname" onblur="check()" required/>
       <br/>
       Password*
       <br/>
       <input type="password" name="passwd" required/>
       <br/>
-      <input type="submit" name="submit" formaction="create/" class="signIn" value="Sign Up"/>
+      <input type="submit" name="submit"  formaction="create/" class="signIn" value="Sign Up"/>
       </form>
   </div>
   <div id="tagline">
@@ -184,7 +203,7 @@
       <div style="height:5%;">
       <h1 class="display-4" style="display: inline;float: left;margin-left: 2%">JUApp</h1>
       <i class="fa fa-user-circle" style="font-size:48px;color:white;float:right;margin-top:1%;
-      margin-right:3%;"></i>
+      margin-right:3%;" onclick ="logout()" title="Logout"></i>
       </div>
       <select name ='dept' id="dept" onchange="load()">
         <option value="select">Select subject</option>

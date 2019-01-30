@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JUApp</title>
+	<script type="text/javascript">
+		function load()
+		{
+			var str=location.href;
+			i=str.indexOf('JUApp');
+			if(i!=-1)
+			{
+				str=str.substr(0,i);
+			}
+			location.href=str+'JUApp/index/';
+		}
+		function logout()
+		{
+			alert('You have been successfully logged out!')
+			load()
+		}
+	</script>
+</head>
+<body onload="logout()">
+Logging out.....
+</body>
+</html>

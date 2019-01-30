@@ -47,3 +47,4 @@ class User(models.Model):
 	password=models.CharField(max_length=20,default='')
 	dept=models.CharField(max_length=50,choices=dept_choice)
 	roll=models.CharField(max_length=20)
+	key=models.CharField(max_length=100,default='')

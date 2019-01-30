@@ -13,16 +13,24 @@ def index(request,placeholder):
 	else :
 		return render(request,'index.html',{'flag':False})
 """
+
+def logout(request):
+	if request.session.has_key('uname'):
+		del request.session['uname']
+	return render(request,'logout.html')
+
 def index(request,placeholder):
-	if request.session['flag']==True:
-		HttpResponseRedirect('/JUApp/'+request.session['uname']+'/')
-	if placeholder=='index':
+	if request.session.has_key('uname') and placeholder=='index':
+		return HttpResponseRedirect('/JUApp/'+request.session['uname']+'/')
+	elif (not request.session.has_key('uname')) or placeholder!=request.session['uname']:
 		return render(request,'index.html',{'flag':True})
-	else :
+	else:
 		return render(request,'index.html',{'flag':False})
 
 
 def subject(request,placeholder,dept):
+	if not (request.session.has_key('uname') and placeholder==request.session['uname']):
+		return render(request,'index.html',{'flag':True})
 	s1=Subjects.objects.filter(dept=dept,sem='First')
 	s2=Subjects.objects.filter(dept=dept,sem='Second')
 	s3=Subjects.objects.filter(dept=dept,sem='Third')
@@ -47,6 +55,8 @@ def subject(request,placeholder,dept):
 """
 
 def resource(request,placeholder,dept,subject):
+	if not (request.session.has_key('uname') and placeholder==request.session['uname']):
+		return render(request,'index.html',{'flag':True})
 	books=os.listdir('/home/krishna/JUApp/media/'+subject+'/'+'book/')
 	slides=os.listdir('/home/krishna/JUApp/media/'+subject+'/slide/')
 	notes=os.listdir('/home/krishna/JUApp/media/'+subject+'/note/')
@@ -56,6 +66,8 @@ def resource(request,placeholder,dept,subject):
 		,'questions':questions,'form':form})
 
 def pdf_response(request,placeholder,subject,dept,resource,res_name):
+	if not (request.session.has_key('uname') and placeholder==request.session['uname']):
+		return render(request,'index.html',{'flag':True})
 	with open('/home/krishna/JUApp/media/'+subject+'/'+resource+'/'+res_name, 'rb') as pdf:
 		response = HttpResponse(pdf.read(), content_type='application/pdf')
 		response['Content-Disposition'] = 'inline'
@@ -66,6 +78,8 @@ def login(request,dept,subject,resource):
 	return render(request,'login.html',{'flag':True,'sub':subject,'res':resource})
 """
 def uploading(request,placeholder,subject,dept,resource):
+	if not (request.session.has_key('uname') and placeholder==request.session['uname']):
+		return render(request,'index.html',{'flag':True})
 	inst=Upload()
 	inst.subject=subject
 	inst.resource=resource
@@ -99,11 +113,12 @@ def create(request,dept,subject,resource):
 def verify(request,placeholder):
 	if request.method=="POST":
 		try:
-			uname=request.POST.get('uname')
+			uname=request.POST.get('uname')+request.POST.get('roll')
 			passwd=request.POST.get('passwd')
-			user=User.objects.get(uname=uname)
+			user=User.objects.get(key=uname)
 			if passwd==user.password:
-				return HttpResponseRedirect('/JUApp/user/')
+				request.session['uname']=uname
+				return HttpResponseRedirect('/JUApp/'+uname+'/')
 			else:
 				return HttpResponseRedirect('/JUApp/index/')
 		except User.DoesNotExist :
@@ -113,9 +128,13 @@ def verify(request,placeholder):
 
 def add(request,placeholder):
 	if request.method=="POST":
-		user=User(name=request.POST.get('name'),uname=request.POST.get('uname'),roll=request.POST.get('roll'),dept=request.POST.get('dept'),password=request.POST.get('passwd'))
+		if User.objects.filter(key=request.POST.get('uname')+request.POST.get('roll')).count()>0:
+			return HttpResponseRedirect('/JUApp/index/')
+		request.session['uname']=request.POST.get('uname')+request.POST.get('roll')
+		user=User(name=request.POST.get('name'),uname=request.POST.get('uname'),roll=request.POST.get('roll'),dept=request.POST.get('dept'),password=request.POST.get('passwd')
+			,key=request.POST.get('uname')+request.POST.get('roll'))
 		user.save()
-		return HttpResponseRedirect('/JUApp/'+request.POST.get('uname')+'/')
+		return HttpResponseRedirect('/JUApp/'+request.POST.get('uname')+request.POST.get('roll')+'/')
 	else:
 		return HttpResponse('Error!')
 
