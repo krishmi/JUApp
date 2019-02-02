@@ -80,6 +80,7 @@ def login(request,dept,subject,resource):
 def uploading(request,placeholder,subject,dept,resource):
 	if not (request.session.has_key('uname') and placeholder==request.session['uname']):
 		return render(request,'index.html',{'flag':True})
+	Upload.objects.all().delete()
 	inst=Upload()
 	inst.subject=subject
 	inst.resource=resource
